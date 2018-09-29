@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  var items=[{id:1, quantity: 1}]
+  var product = {'id': 1, 'title': 'iPad 4 Mini', 'price': 500.01, 'inventory': 2}
+  const cartItem = items.find(item => item.id === product.id)
+  if (!cartItem) {
+    console.log({id: product.id})
+  } else {
+   aaa (cartItem)
+  }
+  // {id} 对象的解构赋值
+  function aaa ({id}) {
+    console.log(id)
+  }
+</script>
+</body>
+</html>

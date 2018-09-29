@@ -5,6 +5,25 @@ const state = {
   items: [],
   checkoutStatus: null
 }
+const getters = {
+  cartProducts: (state, getters, rootState) => {
+    return state.items.map(
+      ({id, quantity}) => {
+        const product = rootState.products.all.find(product => product.id === id)
+        return {
+          title: product.title,
+          price: product.price,
+          quantity
+        }
+      }
+    )
+  },
+  cartTotalPrice: (state, getters) => {
+    return getters.cartProducts.reduce((total, currentValue) => {
+      return total + currentValue.price * currentValue.quantity
+    }, 0)
+  }
+}
 const actions = {
   // 将product添加到购物车items或者增加产品数量
   addProductToCart ({state, commit}, product) {
@@ -17,7 +36,29 @@ const actions = {
         commit('incrementQuantity', cartItem)
       }
     }
+  },
+  checkout ({state, commit}, products) {
+    const savedCartItems = [...state.items]
+    commit('setCheckoutStatus', null)
+    commit('setCartItems', {items: []})
+    buyProducts(
+      products,
+      () => commit('setCheckoutStatus', 'successful'),
+      () => {
+        commit('setCheckoutStatus', 'failed')
+        // rollback to the cart saved before sending the request
+        commit('setCartItems', { items: savedCartItems })
+      }
+    )
   }
+}
+function buyProducts (products, cb, errorCb) {
+  setTimeout(() => {
+    // simulate random checkout failure.
+    (Math.random() > 0.5 || navigator.userAgent.indexOf('PhantomJS') > -1)
+      ? cb()
+      : errorCb()
+  }, 100)
 }
 const mutations = {
   setCheckoutStatus (state, status) {
@@ -42,5 +83,6 @@ export default {
   namespaced: true,
   state,
   actions,
-  mutations
+  mutations,
+  getters
 }
