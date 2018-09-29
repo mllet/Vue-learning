@@ -1,7 +1,9 @@
 <template>
   <div class="right">
-    <router-link to="/tr/3/">tab1</router-link>&nbsp;&nbsp;&nbsp;
-    <router-link to="/tr/3/trc2">tab2</router-link>
+    <div>
+      <router-link to="/tr/3/">tab1</router-link>&nbsp;&nbsp;&nbsp;
+      <router-link to="/tr/3/trc2">tab2</router-link>
+    </div>
     <router-view></router-view>
   </div>
 </template>
