@@ -1,7 +1,7 @@
 <template>
   <div class="shopping_car">
     <hr>
-    <h3>购物车例子test分支修改</h3>
+    <h3>购物车例子测试git</h3>
     <ProductList></ProductList>
     <Cart></Cart>
   </div>
